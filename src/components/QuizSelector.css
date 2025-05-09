@@ -1,0 +1,479 @@
+.quiz-selector-container { 
+  height: 100vh; 
+  background: url('../assets/home-bg.jpg') center center/cover no-repeat;
+  position: relative;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center;
+  overflow: hidden;
+}
+
+.quiz-selector-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(82, 157, 248, 0.8), rgba(124, 214, 253, 0.7));
+  z-index: 1;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 90%;
+  transform: translateY(30px);
+  opacity: 0;
+  animation: slide-up 1s ease forwards;
+}
+
+@keyframes slide-up {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.quiz-selector-title {
+  font-size: 42px;
+  margin-bottom: 16px;
+  color: #1a365d;
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+}
+
+.selector-subtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #2d3748;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-in {
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.animated .letter {
+  animation: letterAnim 0.6s ease forwards;
+}
+
+@keyframes letterAnim {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.deck-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.deck-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  width: 220px;
+  height: 180px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: scale(0.8) rotate(var(--rotation, 0deg));
+}
+
+.deck-card.appear {
+  animation: cardAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cardAppear {
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(var(--rotation, 0deg));
+  }
+}
+
+.deck-card-content {
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.deck-card:hover {
+  transform: translateY(-10px) scale(1.03) rotate(0deg);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.deck-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.2) 0%, rgba(99, 179, 237, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.deck-card:hover::before {
+  opacity: 1;
+}
+
+.deck-card h3 {
+  font-size: 22px;
+  color: #2c5282;
+  margin: 0 0 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.deck-card:hover h3 {
+  transform: translateY(-5px);
+}
+
+.deck-card p {
+  color: #4a5568;
+  font-size: 16px;
+  margin: 0;
+  transition: transform 0.3s ease;
+}
+
+.deck-card:hover p {
+  transform: translateY(-3px);
+}
+
+.card-difficulty {
+  margin-top: 1rem;
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.difficulty-badge.easy {
+  background-color: #c6f6d5;
+  color: #22543d;
+}
+
+.difficulty-badge.medium {
+  background-color: #fefcbf;
+  color: #744210;
+}
+
+.difficulty-badge.hard {
+  background-color: #fed7d7;
+  color: #822727;
+}
+
+.deck-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(66, 153, 225, 0.9), rgba(66, 153, 225, 0.7));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.deck-card:hover .deck-card-overlay {
+  transform: translateY(0);
+}
+
+.start-quiz-text {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.deck-card:hover .arrow-icon {
+  animation: bounceRight 1s infinite;
+}
+
+@keyframes bounceRight {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.back-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #2b6cb0;
+  border: 2px solid #4299e1;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 10px rgba(66, 153, 225, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  font-weight: 600;
+  opacity: 0;
+}
+
+.bounce-in {
+  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  animation-delay: 1.5s;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.back-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.back-button:hover {
+  background-color: #4299e1;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 7px 14px rgba(66, 153, 225, 0.5);
+}
+
+.back-button:hover:before {
+  left: 100%;
+}
+
+.back-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 8px rgba(66, 153, 225, 0.4);
+}
+
+
+.floating-cards {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bg-card {
+  position: absolute;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  opacity: 0.5;
+  color: #4299e1;
+}
+
+.card-1 {
+  width: 80px;
+  height: 100px;
+  top: 3%;
+  left: 45%;
+  background-color: #fef3c7;
+  color: #92400e;
+  animation: float 15s ease-in-out infinite;
+  transform: rotate(-5deg);
+}
+
+.card-2 {
+  width: 100px;
+  height: 90px;
+  bottom: 3%;
+  right: 40%;
+  background-color: #e0f2fe;
+  color: #075985;
+  animation: float 18s ease-in-out infinite 2s;
+  transform: rotate(8deg);
+}
+
+.bg-card.card-3 {
+  width: 70px;
+  height: 90px;
+  top: 60%;
+  left: 15%;
+  background-color: #dcfce7;
+  color: #166534;
+  animation: float 12s ease-in-out infinite 1s;
+  transform: rotate(-15deg);
+}
+
+.bg-card.card-4 {
+  width: 90px;
+  height: 110px;
+  top: 20%;
+  right: 15%;
+  background-color: #ffe4e6;
+  color: #9f1239;
+  animation: float 14s ease-in-out infinite 3s;
+  transform: rotate(10deg);
+}
+
+.bg-card.card-5 {
+  width: 85px;
+  height: 105px;
+  bottom: 70%;
+  right: 40%;
+  background-color: #f3e8ff;
+  color: #6b21a8;
+  animation: float 16s ease-in-out infinite 2s;
+  transform: rotate(-8deg);
+}
+
+.card-6 {
+  width: 80px;
+  height: 100px;
+  bottom: 40%;
+  right: 10%;
+  background-color: #e0f2fe;
+  color: #075985;
+  animation: float 18s ease-in-out infinite 2s;
+  transform: rotate(8deg);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-20px) rotate(var(--rotation, 0deg));
+  }
+  100% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+}
+@media (max-width: 768px) {
+  .quiz-selector-title {
+    font-size: 36px;
+  }
+  
+  .selector-subtitle {
+    font-size: 18px;
+  }
+  
+  .content-wrapper {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
+  
+  .deck-card {
+    width: 180px;
+    height: 160px;
+  }
+  
+  .deck-card h3 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quiz-selector-title {
+    font-size: 28px;
+  }
+  
+  .selector-subtitle {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+  
+  .deck-list {
+    gap: 1rem;
+  }
+  
+  .deck-card {
+    width: 150px;
+    height: 140px;
+  }
+  
+  .deck-card h3 {
+    font-size: 18px;
+  }
+  
+  .deck-card p {
+    font-size: 14px;
+  }
+  
+  .deck-card-content {
+    padding: 1rem;
+  }
+  
+  .difficulty-badge {
+    font-size: 12px;
+    padding: 0.2rem 0.6rem;
+  }
+}
