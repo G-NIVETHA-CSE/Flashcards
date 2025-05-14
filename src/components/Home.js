@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './Home.css'; 
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 function Home() { 
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -75,7 +77,7 @@ function Home() {
       setIsSubmitting(true);
       
       
-      const response = await fetch('http://localhost:5000/api/users/register', {
+      const response = await fetch(`${API_URL}/api/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +109,7 @@ function Home() {
       
     } catch (error) {
       setAuthMessage(error.message);
-    } finally {
+    } finally { 
       setIsSubmitting(false);
     }
   };
@@ -116,7 +118,7 @@ function Home() {
     try {
       setIsSubmitting(true);
     
-      const response = await fetch('http://localhost:5000/api/users/login', {
+      const response = await fetch(`${API_URL}/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

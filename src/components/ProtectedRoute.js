@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +18,7 @@ const ProtectedRoute = () => {
           return setIsLoading(false);
         }
         
-        const response = await fetch('http://localhost:5000/api/users/me', {
+        const response = await fetch(`${API_URL}/api/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

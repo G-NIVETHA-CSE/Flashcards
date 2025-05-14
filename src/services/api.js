@@ -1,7 +1,8 @@
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://flashcards-backend-0n09.onrender.com';
+
 
 const getAuthHeader = () => {
   const token = localStorage.getItem('token');
@@ -10,7 +11,7 @@ const getAuthHeader = () => {
 
 export const authService = {
   register: async (userData) => {
-    const response = await fetch(`${API_URL}/users/register`, {
+    const response = await fetch(`${API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ export const authService = {
   },
   
   login: async (credentials) => {
-    const response = await fetch(`${API_URL}/users/login`, {
+    const response = await fetch(`${API_URL}/api/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ export const authService = {
   },
   
   getProfile: async () => {
-    const response = await fetch(`${API_URL}/users/me`, {
+    const response = await fetch(`${API_URL}/api/users/me`, {
       headers: {
         ...getAuthHeader(),
         'Content-Type': 'application/json',
@@ -68,7 +69,7 @@ export const authService = {
 export const deckService = {
   getDecks: async () => {
     try {
-      const response = await axios.get(`${API_URL}/decks`);
+      const response = await axios.get(`${API_URL}/api/decks`);
       return response.data;
     } catch (error) {
       console.error('Error fetching decks:', error);
@@ -78,7 +79,7 @@ export const deckService = {
   
   getDeck: async (id) => {
     try {
-      const response = await axios.get(`${API_URL}/decks/${id}`);
+      const response = await axios.get(`${API_URL}/api/decks/${id}`);
       return response.data;
     } catch (error) {
       console.error('Error fetching deck:', error);
@@ -88,7 +89,7 @@ export const deckService = {
   
   createDeck: async (deckData) => {
     try {
-      const response = await axios.post(`${API_URL}/decks`, deckData);
+      const response = await axios.post(`${API_URL}/api/decks`, deckData);
       return response.data;
     } catch (error) {
       console.error('Error creating deck:', error);
@@ -98,7 +99,7 @@ export const deckService = {
 
   addCardsToDeck: async (deckId, cards) => {
     try {
-      const response = await axios.post(`${API_URL}/decks/${deckId}/cards`, { cards });
+      const response = await axios.post(`${API_URL}/api/decks/${deckId}/cards`, { cards });
       return response.data;
     } catch (error) {
       console.error('Error adding cards to deck:', error);
@@ -108,7 +109,7 @@ export const deckService = {
 };
 export const statsService = {
   getUserStats: async () => {
-    const response = await fetch(`${API_URL}/stats/user`, {
+    const response = await fetch(`${API_URL}/api/stats/user`, {
       headers: {
         ...getAuthHeader(),
         'Content-Type': 'application/json',
@@ -124,7 +125,7 @@ export const statsService = {
   },
 
   getDeckStats: async (deckName) => {
-    const response = await fetch(`${API_URL}/stats/deck/${deckName}`, {
+    const response = await fetch(`${API_URL}/api/stats/deck/${deckName}`, {
       headers: {
         ...getAuthHeader(),
         'Content-Type': 'application/json',
@@ -140,7 +141,7 @@ export const statsService = {
   },
 
   recordStats: async (statsData) => {
-    const response = await fetch(`${API_URL}/stats`, {
+    const response = await fetch(`${API_URL}/api/stats`, {
       method: 'POST',
       headers: {
         ...getAuthHeader(),
@@ -158,7 +159,7 @@ export const statsService = {
   },
   
   resetStats: async () => {
-    const response = await fetch(`${API_URL}/stats/reset`, {
+    const response = await fetch(`${API_URL}/api/stats/reset`, {
       method: 'DELETE',
       headers: {
         ...getAuthHeader(),
